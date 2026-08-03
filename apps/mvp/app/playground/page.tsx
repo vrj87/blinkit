@@ -2,8 +2,9 @@ import { readFileSync } from "fs";
 import { join } from "path";
 import { discoveryDataDir, themesPath, validationResultsPath } from "@blinkit/discovery-core";
 import { prisma } from "@/lib/db";
-import { collectAppUrl, isLocalCollectHost } from "@/lib/collect-url";
+import { collectAppUrl, collectIframeSrc, isLocalCollectHost, shouldEmbedCollectFrame } from "@/lib/collect-url";
 import { ResearchQAShowcase } from "@/components/ResearchQAShowcase";
+import { CollectPipelineShowcase } from "@/components/CollectPipelineShowcase";
 import { loadSurveyEvidence } from "@/lib/survey-evidence";
 import { PlaygroundNav } from "@/components/PlaygroundNav";
 import { ProblemDefinitionShowcase } from "@/components/ProblemDefinitionShowcase";
@@ -28,7 +29,9 @@ export default async function PlaygroundPage() {
   const discovery = loadDiscovery();
   const survey = loadSurveyEvidence();
   const collectUrl = collectAppUrl();
-  const embedCollect = isLocalCollectHost(collectUrl);
+  const localCollect = isLocalCollectHost(collectUrl);
+  const embedCollect = shouldEmbedCollectFrame(collectUrl);
+  const collectLink = collectUrl.includes("/dashboard/discovery") ? "/dashboard/discovery" : collectUrl;
 
   const [users, nudges, orderCount] = await Promise.all([
     prisma.user.findMany({ orderBy: { orderCount: "desc" } }),
@@ -118,33 +121,32 @@ export default async function PlaygroundPage() {
         <section id="collect" className="playground-section">
           <h2>Review collection</h2>
           <p className="playground-lead">
-            {embedCollect
+            {localCollect
               ? "Paste reviews or upload CSV — the first step in understanding what Blinkit users need."
-              : "Collect and normalize user feedback from app stores, forums, and surveys."}
+              : "Scraped reviews from app stores, forums, and social — normalized into themes for discovery."}
           </p>
           <p style={{ marginBottom: "1rem" }}>
-            <a href={collectUrl} target={embedCollect ? "_blank" : undefined} rel="noopener noreferrer">
-              {embedCollect ? "Open collect UI in new tab →" : "Open discovery workflow →"}
+            <a
+              href={collectLink}
+              target={localCollect ? "_blank" : undefined}
+              rel={localCollect ? "noopener noreferrer" : undefined}
+            >
+              {localCollect ? "Open collect UI in new tab →" : "Open discovery workflow →"}
             </a>
           </p>
           {embedCollect ? (
-            <iframe
-              title="Collect UI"
-              src={collectUrl}
-              className="playground-iframe"
-              loading="lazy"
-            />
+            <>
+              {!localCollect && <CollectPipelineShowcase />}
+              <iframe
+                title={localCollect ? "Collect UI" : "Discovery workflow"}
+                src={collectIframeSrc(collectUrl)}
+                className="playground-iframe"
+                loading="lazy"
+                style={localCollect ? undefined : { marginTop: "1rem" }}
+              />
+            </>
           ) : (
-            <div className="card">
-              <p>
-                Discovery engine: <strong>{discovery?.stats.afterFilter ?? 577}</strong> reviews
-                analyzed · <strong>{discovery?.themes.themes.length ?? 10}</strong> themes ·{" "}
-                <strong>{survey?.meta.n ?? 40}</strong> survey responses
-              </p>
-              <p style={{ marginTop: "0.5rem" }}>
-                <a href="/discovery/part1">View research insights →</a>
-              </p>
-            </div>
+            <CollectPipelineShowcase />
           )}
         </section>
 

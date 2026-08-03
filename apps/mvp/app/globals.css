@@ -1077,6 +1077,28 @@ nav.links a:hover {
   box-shadow: var(--shadow-md);
 }
 
+.collect-source-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.collect-source-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  background: var(--surface-elevated, var(--surface));
+}
+
+.collect-source-count {
+  font-weight: 700;
+  color: var(--accent, #0a8f4f);
+}
+
 /* ——— Demo order history ——— */
 .delivery-bar {
   display: flex;
