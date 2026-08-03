@@ -3,6 +3,7 @@ import { prisma } from "@/lib/db";
 import { nudgeFeedbackSchema } from "@/lib/api/schemas";
 import { jsonError } from "@/lib/api/response";
 import { placeStarterPackOrder } from "@/lib/order-service";
+import { serializeOrder } from "@/lib/serialize";
 
 export async function POST(
   request: NextRequest,
@@ -39,7 +40,7 @@ export async function POST(
     }
     return NextResponse.json({
       nudge,
-      order: result.order,
+      order: serializeOrder(result.order),
       itemCount: result.itemCount,
     });
   }

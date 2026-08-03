@@ -12,6 +12,8 @@ export function BlinkitPhoneShell({
   searchQuery = "",
   onSearchChange,
   onSearchFocus,
+  onRefresh,
+  refreshing = false,
 }: {
   children: ReactNode;
   activeTab: BlinkitTab;
@@ -20,6 +22,8 @@ export function BlinkitPhoneShell({
   searchQuery?: string;
   onSearchChange?: (query: string) => void;
   onSearchFocus?: () => void;
+  onRefresh?: () => void;
+  refreshing?: boolean;
 }) {
   return (
     <div className="blinkit-phone">
@@ -49,6 +53,18 @@ export function BlinkitPhoneShell({
             aria-label="Clear search"
           >
             ×
+          </button>
+        )}
+        {onRefresh && (
+          <button
+            type="button"
+            className="blinkit-phone-refresh"
+            onClick={onRefresh}
+            disabled={refreshing}
+            aria-label="Refresh orders and recommendations"
+            title="Refresh"
+          >
+            {refreshing ? "…" : "↻"}
           </button>
         )}
       </label>

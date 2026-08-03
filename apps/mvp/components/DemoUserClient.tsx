@@ -2,8 +2,10 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { type DemoBasket } from "@/lib/demo-orders";
 import { OrderHistory, type OrderRow } from "@/components/OrderHistory";
+import { normalizeOrderRow } from "@/lib/order-row";
 import { BlinkitPhoneShell, type BlinkitTab } from "@/components/BlinkitPhoneShell";
 import { DeliveryTracker } from "@/components/DeliveryTracker";
 import { SmartCategoryNudge } from "@/components/SmartCategoryNudge";
@@ -63,12 +65,14 @@ interface DemoUserPageProps {
 }
 
 export function DemoUserClient({ user, embedded = false }: DemoUserPageProps) {
+  const router = useRouter();
   const hasPendingOnLoad = user.nudges.some((n) => n.status === "pending");
 
   const [orders, setOrders] = useState<OrderRow[]>(user.orders);
   const [orderCount, setOrderCount] = useState(user.orderCount);
   const [nudges, setNudges] = useState<NudgeRow[]>(user.nudges);
   const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const [generating, setGenerating] = useState(false);
   const [aiStep, setAiStep] = useState("");
   const [message, setMessage] = useState("");
@@ -90,6 +94,52 @@ export function DemoUserClient({ user, embedded = false }: DemoUserPageProps) {
     (n) => n.status !== "pending" && n.id !== queuedNudge?.id
   );
   const firstName = user.name.split(" ")[0];
+
+  const scrollToOrder = useCallback((orderId: string) => {
+    requestAnimationFrame(() => {
+      const el = document.getElementById(`order-${orderId}`);
+      const scroller = el?.closest(".blinkit-phone-content");
+      if (el && scroller instanceof HTMLElement) {
+        const elRect = el.getBoundingClientRect();
+        const scrollRect = scroller.getBoundingClientRect();
+        const top = scroller.scrollTop + (elRect.top - scrollRect.top) - 8;
+        scroller.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+        return;
+      }
+      el?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+  }, []);
+
+  const refreshMvpData = useCallback(async () => {
+    setRefreshing(true);
+    setMessage("");
+    try {
+      const res = await fetch(`/api/users/${user.id}`, { cache: "no-store" });
+      const data = await res.json();
+      if (!res.ok || !data.user) {
+        setMessage(data.error ?? "Could not refresh data");
+        return;
+      }
+      const refreshedOrders = (data.user.orders ?? []).map(normalizeOrderRow);
+      setOrders(refreshedOrders);
+      setOrderCount(data.user.orderCount ?? refreshedOrders.length);
+      setNudges(
+        (data.user.nudges ?? []).map((n: unknown) => normalizeNudgeRow(n))
+      );
+      router.refresh();
+      setMessage(`Synced ${refreshedOrders.length} orders`);
+      setTimeout(() => setMessage(""), 2500);
+    } catch {
+      setMessage("Refresh failed — check your connection");
+    } finally {
+      setRefreshing(false);
+    }
+  }, [router, user.id]);
+
+  useEffect(() => {
+    if (!highlightOrderId || appTab !== "orders") return;
+    scrollToOrder(highlightOrderId);
+  }, [highlightOrderId, appTab, scrollToOrder]);
 
   useEffect(() => {
     if (appTab !== "foryou" || activeNudge) return;
@@ -130,7 +180,10 @@ export function DemoUserClient({ user, embedded = false }: DemoUserPageProps) {
       setTimeout(() => setAppTab("foryou"), 800);
     }
     setMessage("Order delivered in 10 minutes ⚡");
-  }, [queuedNudge, firstName]);
+    if (highlightOrderId) {
+      setTimeout(() => scrollToOrder(highlightOrderId), 100);
+    }
+  }, [queuedNudge, firstName, highlightOrderId, scrollToOrder]);
 
   function upsertNudge(nudge: NudgeRow) {
     setNudges((prev) => {
@@ -160,18 +213,12 @@ export function DemoUserClient({ user, embedded = false }: DemoUserPageProps) {
   ) {
     if (!data.order) return;
 
-    const newOrder: OrderRow = {
-      id: data.order.id,
-      items: data.order.items,
-      categories: data.order.categories,
-      lineItems: data.order.lineItems ?? null,
-      totalAmount: data.order.totalAmount,
-      createdAt: data.order.createdAt ?? new Date().toISOString(),
-    };
-    setOrders((prev) => [newOrder, ...prev]);
+    const newOrder = normalizeOrderRow(data.order);
+    setOrders((prev) => [newOrder, ...prev.filter((o) => o.id !== newOrder.id)]);
     setOrderCount((c) => c + 1);
     setHighlightOrderId(newOrder.id);
     setAppTab("orders");
+    scrollToOrder(newOrder.id);
     setActiveDelivery({
       orderId: newOrder.id,
       totalAmount: meta.totalAmount,
@@ -350,6 +397,8 @@ export function DemoUserClient({ user, embedded = false }: DemoUserPageProps) {
       searchQuery={searchQuery}
       onSearchChange={handleSearchChange}
       onSearchFocus={handleSearchFocus}
+      onRefresh={refreshMvpData}
+      refreshing={refreshing}
     >
       {pushBanner && (
         <button
@@ -394,6 +443,22 @@ export function DemoUserClient({ user, embedded = false }: DemoUserPageProps) {
 
       {appTab === "orders" && (
         <>
+          <div className="orders-tab-header">
+            <div>
+              <h3 className="orders-tab-title">Your orders</h3>
+              <p className="orders-tab-sub">
+                {orderCount} total · {orders.length} shown
+              </p>
+            </div>
+            <button
+              type="button"
+              className="btn btn-secondary btn-sm"
+              onClick={refreshMvpData}
+              disabled={refreshing}
+            >
+              {refreshing ? "Syncing…" : "↻ Refresh"}
+            </button>
+          </div>
           {activeDelivery && (
             <DeliveryTracker
               key={activeDelivery.orderId}

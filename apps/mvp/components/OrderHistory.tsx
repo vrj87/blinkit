@@ -6,16 +6,7 @@ import {
   shortOrderId,
   type DemoBasket,
 } from "@/lib/demo-orders";
-
-export interface OrderLineItemRow {
-  productId: string;
-  name: string;
-  brand: string;
-  quantity: number;
-  unitPrice: number;
-  lineTotal: number;
-  category: string;
-}
+import { parseOrderField, type OrderLineItemRow } from "@/lib/order-row";
 
 export interface OrderRow {
   id: string;
@@ -25,6 +16,8 @@ export interface OrderRow {
   createdAt: string;
   lineItems?: string | null;
 }
+
+export type { OrderLineItemRow } from "@/lib/order-row";
 
 export function OrderHistory({
   orders,
@@ -49,10 +42,10 @@ export function OrderHistory({
     <div className="order-history-list">
       {orders.map((order, index) => {
         const lineItems = order.lineItems
-          ? (JSON.parse(order.lineItems) as OrderLineItemRow[])
+          ? parseOrderField<OrderLineItemRow[]>(order.lineItems)
           : null;
-        const items = JSON.parse(order.items) as string[];
-        const categories = JSON.parse(order.categories) as string[];
+        const items = parseOrderField<string[]>(order.items);
+        const categories = parseOrderField<string[]>(order.categories);
         const displayItems = lineItems
           ? lineItems.map((l) => `${l.name} ×${l.quantity}`)
           : items;
@@ -63,6 +56,7 @@ export function OrderHistory({
         return (
           <article
             key={order.id}
+            id={`order-${order.id}`}
             className={`order-history-card ${isHighlighted ? "order-history-card-new" : ""}`}
           >
             <div className="order-history-top">
