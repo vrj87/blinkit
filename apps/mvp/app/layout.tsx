@@ -32,11 +32,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <span className="blinkit-topstrip-text">Smart Category Explorer · Blinkit growth demo</span>
           </div>
           <header className="blinkit-brandbar">
-            <a href="/playground" className="blinkit-logo">
+            <a href="/playground" className="blinkit-logo" aria-label="Blinkit home — back to project overview">
               blink<span>it</span>
             </a>
-            <a href="/mvp" className="blinkit-brandbar-tag">
+            <a href="/mvp" className="blinkit-brandbar-tag blinkit-brandbar-mvp">
               Smart Category Explorer
+            </a>
+            <a href="/playground" className="blinkit-brandbar-tag blinkit-brandbar-overview">
+              ← Overview
             </a>
           </header>
         </div>

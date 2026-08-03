@@ -118,6 +118,10 @@ a:hover {
   text-decoration: none;
 }
 
+.blinkit-brandbar-overview {
+  display: none;
+}
+
 .back-to-top {
   position: fixed;
   right: 1.25rem;
@@ -3032,14 +3036,59 @@ nav.links a:hover {
     height: 100%;
   }
 
-  body:has(.mvp-page),
+  body:has(.mvp-page) {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100dvh;
+    height: 100svh;
+  }
+
   body:has(.demo-user-page) {
     overflow: hidden;
     height: 100dvh;
     height: 100svh;
   }
 
-  body:has(.mvp-page) .blinkit-chrome,
+  /* Compact Blinkit header on MVP — logo links to /playground overview */
+  body:has(.mvp-page) .blinkit-chrome {
+    display: block;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 110;
+  }
+
+  body:has(.mvp-page) .blinkit-topstrip {
+    display: none;
+  }
+
+  body:has(.mvp-page) .blinkit-brandbar {
+    padding: 0.55rem 0.85rem;
+    padding-top: max(0.55rem, env(safe-area-inset-top, 0px));
+    padding-left: max(0.85rem, env(safe-area-inset-left, 0px));
+    padding-right: max(0.85rem, env(safe-area-inset-right, 0px));
+    gap: 0.5rem;
+  }
+
+  body:has(.mvp-page) .blinkit-logo {
+    font-size: 1.4rem;
+  }
+
+  body:has(.mvp-page) .blinkit-brandbar-tag {
+    font-size: 0.65rem;
+    padding: 0.28rem 0.55rem;
+    white-space: nowrap;
+  }
+
+  body:has(.mvp-page) .blinkit-brandbar-mvp {
+    display: none;
+  }
+
+  body:has(.mvp-page) .blinkit-brandbar-overview {
+    display: inline-flex;
+    align-items: center;
+  }
+
   body:has(.demo-user-page) .blinkit-chrome {
     display: none;
   }
@@ -3050,7 +3099,18 @@ nav.links a:hover {
     right: max(1rem, env(safe-area-inset-right, 0px));
   }
 
-  .mvp-page.container,
+  .mvp-page.container {
+    max-width: none;
+    padding: 0;
+    margin: 0;
+    flex: 1;
+    min-height: 0;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
   .demo-user-page.container {
     max-width: none;
     padding: 0;
@@ -3122,7 +3182,6 @@ nav.links a:hover {
     scrollbar-width: none;
     margin: 0;
     padding: 0.5rem 0.75rem;
-    padding-top: max(0.5rem, env(safe-area-inset-top, 0px));
     border-radius: 0;
     gap: 0.35rem;
   }
