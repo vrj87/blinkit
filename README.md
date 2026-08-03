@@ -29,6 +29,7 @@ GrauationProject2/
 │   └── problem-definition.md
 ├── workflows/                # n8n workflow exports
 ├── scripts/                  # Dev, deploy, scrape helpers
+├── netlify.toml              # Netlify build (GitHub → Netlify CD)
 ├── vitest.config.ts
 └── package.json
 ```
@@ -89,15 +90,23 @@ npm run test:mvp      # MVP tests only
 4. Accept starter pack → appears in **Orders**
 5. **Ops** — `/dashboard` for funnel metrics
 
-## Deploy to Vercel
+## Deploy to production
+
+### GitHub → Netlify (recommended)
+
+1. Push to [github.com/vrj87/blinkit](https://github.com/vrj87/blinkit) (`main` branch).
+2. Connect the repo in [Netlify](https://app.netlify.com) (Import from Git).
+3. Set env vars (`GROQ_API_KEY`, `DATABASE_URL`, etc.) — see [docs/NETLIFY.md](docs/NETLIFY.md).
+
+Every `git push origin main` triggers a new Netlify production deploy.
+
+### Vercel (alternative)
 
 ```cmd
 scripts\deploy-prod.cmd
 ```
 
-See [docs/PRODUCTION.md](docs/PRODUCTION.md) and [apps/mvp/DEPLOY.md](apps/mvp/DEPLOY.md).
-
-**Production demo URL:** `https://YOUR-APP.vercel.app/playground`
+See [docs/PRODUCTION.md](docs/PRODUCTION.md).
 
 ## Deliverables
 

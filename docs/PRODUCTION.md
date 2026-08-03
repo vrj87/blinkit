@@ -1,15 +1,18 @@
 # Production URLs
 
-> **Deploy:** `scripts\deploy-prod.cmd` from repo root (requires Vercel approval)
+> **Netlify:** [NETLIFY.md](./NETLIFY.md) + root `netlify.toml` · **Vercel:** `scripts\deploy-prod.cmd`
 
-| Page | URL (after deploy) |
-|------|---------------------|
-| **Playground (all features)** | `https://category-explorer-mvp.vercel.app/playground` |
-| Discovery Q&A | `https://category-explorer-mvp.vercel.app/dashboard/discovery` |
-| P1 demo (Atharv) | `https://category-explorer-mvp.vercel.app/demo/user/user-atharv` |
-| Ops dashboard | `https://category-explorer-mvp.vercel.app/dashboard` |
+| Page | Path |
+|------|------|
+| **Playground** | `/playground` |
+| **MVP phone** | `/mvp` |
+| Discovery Q&A | `/dashboard/discovery` |
+| P1 demo | `/demo/user/user-atharv` |
+| Ops | `/dashboard` |
 
-**Deck slide 3 & 8:** Use the **playground** URL as the primary demo link.
+Use `https://YOUR-SITE.netlify.app` + path above (or your Vercel URL).
+
+**Deck slide 3 & 8:** **playground** URL.
 
 ## Configured automatically on deploy
 
@@ -22,7 +25,7 @@
 
 | Feature | Local | Production |
 |---------|-------|--------------|
-| Playground | http://localhost:3000/playground | `/playground` on Vercel |
+| Playground | http://localhost:3000/playground | `/playground` on Netlify/Vercel |
 | Collect UI iframe | http://localhost:3001 | Discovery dashboard (read-only workflow) |
 | Discovery data | `data/discovery/` (577 signals) | Bundled via `outputFileTracingRoot` |
-| LLM nudges | Groq API | Groq API (env on Vercel) |
+| LLM nudges | Groq API | Groq API (env on host) |
