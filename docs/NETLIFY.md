@@ -83,6 +83,59 @@ Replace `YOUR-SITE` with your Netlify subdomain (e.g. `blinkit` → `blinkit.net
 
 ---
 
+## Deploy audit (local vs Netlify)
+
+Before trusting a Netlify deploy, compare what the build produced locally:
+
+```powershell
+# From repo root — after a full build (see scripts/netlify-build.sh on Linux / below on Windows)
+powershell -ExecutionPolicy Bypass -File scripts/audit-publish.ps1
+```
+
+**Local build (Windows):**
+
+```powershell
+cd apps/mvp
+$env:DATABASE_URL="file:./dev.db"
+npx prisma generate
+npx prisma db push
+npx tsx prisma/seed.ts
+Copy-Item dev.db prisma/dev.db -Force
+npm run build
+cd ../..
+powershell -ExecutionPolicy Bypass -File scripts/audit-publish.ps1
+```
+
+**What to expect** (healthy build):
+
+| Check | Expected |
+|-------|----------|
+| `apps/mvp/.next` | ~300+ files, ~150–200 MB |
+| Routes | `/mvp`, `/playground`, `/api/health`, etc. under `server/app` |
+| `dev.db` in `.nft.json` | Listed in traces for `/mvp`, `/playground`, `/api/*` |
+| Prisma engine | `libquery_engine-rhel-openssl-3.0.x.so.node` in traces |
+
+### Netlify CLI
+
+```bash
+npm install -g netlify-cli
+netlify login
+netlify link
+
+# Lists files before upload — eyeball count/paths:
+netlify deploy --build
+
+# Production:
+netlify deploy --build --prod
+
+# After deploy — replace DEPLOY_ID from deploy URL or dashboard:
+netlify api getDeploy --data '{"deploy_id": "DEPLOY_ID"}'
+```
+
+Check `summary.messages` for warnings and `required` for missing content hashes.
+
+---
+
 ## Troubleshooting
 
 ### `a3.snapshot is not a function` (Next.js 15)
