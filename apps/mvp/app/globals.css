@@ -38,7 +38,10 @@ body {
   color: var(--text);
   line-height: 1.55;
   min-height: 100vh;
+  min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: clip;
 }
 
 a {
@@ -2977,5 +2980,223 @@ nav.links a:hover {
   font-size: 0.8rem;
   color: var(--muted);
   margin-top: 0.2rem;
+}
+
+/* ——— MVP mobile (phones & tablets portrait) ——— */
+@media (max-width: 768px) {
+  body:has(.mvp-page),
+  body:has(.demo-user-page) {
+    overflow-x: clip;
+  }
+
+  body:has(.mvp-page) .blinkit-chrome,
+  body:has(.demo-user-page) .blinkit-chrome {
+    display: none;
+  }
+
+  body:has(.mvp-page) .back-to-top,
+  body:has(.demo-user-page) .back-to-top {
+    bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+    right: max(1rem, env(safe-area-inset-right, 0px));
+  }
+
+  .mvp-page.container,
+  .demo-user-page.container {
+    max-width: none;
+    padding: 0;
+    margin: 0;
+    min-height: 100dvh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .demo-user-page .back-link {
+    flex-shrink: 0;
+    padding: 0.5rem 0.75rem;
+    padding-top: max(0.5rem, env(safe-area-inset-top, 0px));
+    margin: 0;
+    font-size: 0.8rem;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .demo-user-page .blinkit-phone {
+    flex: 1;
+    min-height: 0;
+  }
+
+  .mvp-page .part4-hero,
+  .mvp-page .part4-workflow,
+  .mvp-page .part4-api-hint {
+    display: none;
+  }
+
+  .mvp-page .part4-demo-section h2,
+  .mvp-page .part4-demo-section .part1-section-lead {
+    display: none;
+  }
+
+  .mvp-page .part4-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+    min-height: 100svh;
+  }
+
+  .mvp-page .part4-demo-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .mvp-page .demo-user-switcher {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    max-width: none;
+    width: 100%;
+    min-height: 0;
+    margin: 0;
+  }
+
+  .mvp-page .demo-user-pills {
+    flex-shrink: 0;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin: 0;
+    padding: 0.5rem 0.75rem;
+    padding-top: max(0.5rem, env(safe-area-inset-top, 0px));
+    border-radius: 0;
+    gap: 0.35rem;
+  }
+
+  .mvp-page .demo-user-pills::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mvp-page .demo-user-pill {
+    flex: 0 0 auto;
+    min-width: 4.75rem;
+    min-height: 44px;
+    padding: 0.45rem 0.65rem;
+  }
+
+  .mvp-page .blinkit-app-embed {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    max-height: none;
+    margin: 0;
+    width: 100%;
+  }
+
+  .mvp-page .blinkit-phone,
+  .demo-user-page .blinkit-phone {
+    width: 100%;
+    max-width: none;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .mvp-page .blinkit-phone-status,
+  .demo-user-page .blinkit-phone-status {
+    display: none;
+  }
+
+  .mvp-page .blinkit-phone-search,
+  .demo-user-page .blinkit-phone-search {
+    margin: 0.5rem 0.75rem;
+    margin-left: max(0.75rem, env(safe-area-inset-left, 0px));
+    margin-right: max(0.75rem, env(safe-area-inset-right, 0px));
+  }
+
+  .mvp-page .blinkit-phone-search-input,
+  .demo-user-page .blinkit-phone-search-input {
+    font-size: 16px;
+  }
+
+  .mvp-page .blinkit-phone-content,
+  .demo-user-page .blinkit-phone-content {
+    padding-left: max(0.75rem, env(safe-area-inset-left, 0px));
+    padding-right: max(0.75rem, env(safe-area-inset-right, 0px));
+    overscroll-behavior: contain;
+  }
+
+  .mvp-page .blinkit-bottom-nav,
+  .demo-user-page .blinkit-bottom-nav {
+    padding-bottom: max(0.5rem, env(safe-area-inset-bottom, 0px));
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
+  }
+
+  .mvp-page .blinkit-nav-item,
+  .demo-user-page .blinkit-nav-item {
+    min-height: 44px;
+    justify-content: center;
+  }
+
+  .mvp-page .product-add-btn,
+  .mvp-page .product-qty-control button,
+  .demo-user-page .product-add-btn,
+  .demo-user-page .product-qty-control button {
+    min-height: 44px;
+  }
+
+  .mvp-page .nudge-actions-row,
+  .demo-user-page .nudge-actions-row {
+    flex-wrap: wrap;
+  }
+
+  .mvp-page .nudge-actions-row .btn,
+  .demo-user-page .nudge-actions-row .btn {
+    min-height: 44px;
+    flex: 1 1 calc(50% - 0.25rem);
+  }
+
+  .mvp-page .cart-bar,
+  .demo-user-page .cart-bar {
+    margin-left: max(0, env(safe-area-inset-left, 0px));
+    margin-right: max(0, env(safe-area-inset-right, 0px));
+  }
+
+  .mvp-page .blinkit-home-banners,
+  .demo-user-page .blinkit-home-banners {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 380px) {
+  .mvp-page .nudge-actions-row,
+  .demo-user-page .nudge-actions-row {
+    flex-direction: column;
+  }
+
+  .mvp-page .nudge-actions-row .btn,
+  .demo-user-page .nudge-actions-row .btn {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+  .mvp-page .demo-user-pill-name {
+    font-size: 0.78rem;
+  }
+}
+
+@media (pointer: coarse) {
+  .btn,
+  .blinkit-nav-item,
+  .demo-user-pill,
+  .blinkit-cat-btn {
+    touch-action: manipulation;
+  }
 }
 

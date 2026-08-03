@@ -481,7 +481,7 @@ export function DemoUserClient({ user, embedded = false }: DemoUserPageProps) {
   }
 
   return (
-    <main className="container">
+    <main className="container demo-user-page">
       <p className="back-link">
         <Link href="/mvp">← Smart Category Explorer</Link>
       </p>

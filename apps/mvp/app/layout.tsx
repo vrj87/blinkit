@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { BackToTop } from "@/components/BackToTop";
 import "./globals.css";
@@ -13,6 +13,13 @@ export const metadata: Metadata = {
   title: "Smart Category Explorer | Blinkit",
   description:
     "AI-native post-delivery category recommendations powered by discovery research and Groq LLM",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#0c831f",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
