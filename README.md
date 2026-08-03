@@ -96,7 +96,7 @@ npm run test:mvp      # MVP tests only
 
 1. Push to [github.com/vrj87/blinkit](https://github.com/vrj87/blinkit) (`main` branch).
 2. Connect the repo in [Netlify](https://app.netlify.com) (Import from Git).
-3. Set env vars (`GROQ_API_KEY`, `DATABASE_URL`, etc.) — see [docs/NETLIFY.md](docs/NETLIFY.md).
+3. Set env vars — see [docs/NETLIFY_CHECKLIST.md](docs/NETLIFY_CHECKLIST.md) and [docs/NETLIFY.md](docs/NETLIFY.md).
 
 Every `git push origin main` triggers a new Netlify production deploy.
 

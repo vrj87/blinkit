@@ -14,6 +14,7 @@
     "dev:collect": "npm run dev -w collect",
     "expand:corpus": "npm run expand-corpus -w collect",
     "build": "npm run build -w category-explorer-mvp",
+    "build:netlify": "bash scripts/netlify-build.sh",
     "db:seed": "npm run db:seed -w category-explorer-mvp",
     "backend:setup": "powershell -ExecutionPolicy Bypass -File scripts/setup-backend.ps1",
     "test": "vitest run",
@@ -21,8 +22,10 @@
     "test:mvp": "vitest run tests/mvp"
   },
   "devDependencies": {
-    "@netlify/plugin-nextjs": "^5.15.11",
     "vitest": "^3.2.7"
+  },
+  "dependencies": {
+    "@netlify/plugin-nextjs": "^5.15.11"
   },
   "allowScripts": {
     "@prisma/client@6.19.3": true,

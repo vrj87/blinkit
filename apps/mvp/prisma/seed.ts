@@ -132,6 +132,15 @@ async function main() {
 }
 
 async function seedLlmPendingNudges() {
+  if (process.env.SKIP_LLM_SEED === "true") {
+    console.log("SKIP_LLM_SEED=true — skipping Groq nudge generation");
+    return 0;
+  }
+  if (!process.env.GROQ_API_KEY && !process.env.OPENAI_API_KEY) {
+    console.warn("No GROQ_API_KEY or OPENAI_API_KEY — skipping LLM nudge seed");
+    return 0;
+  }
+
   let created = 0;
 
   for (const userId of LLM_NUDGE_USER_IDS) {
@@ -152,34 +161,38 @@ async function seedLlmPendingNudges() {
 
     const recentItems = user.orders.flatMap((o) => parseJsonArray<string>(o.items));
 
-    const { output, meta } = await generateNudge({
-      userName: user.name,
-      categoriesPurchased: categories,
-      recentItems,
-      orderCount: user.orderCount,
-    });
+    try {
+      const { output, meta } = await generateNudge({
+        userName: user.name,
+        categoriesPurchased: categories,
+        recentItems,
+        orderCount: user.orderCount,
+      });
 
-    await prisma.nudge.create({
-      data: {
-        userId: user.id,
-        suggestedCategory: output.suggestedCategory,
-        adjacentTo: JSON.stringify(output.adjacentTo),
-        copy: output.copy,
-        rationale: output.rationale,
-        riskReducers: JSON.stringify(output.riskReducers),
-        confidence: output.confidence,
-        evidenceThemeIds: JSON.stringify(output.evidenceThemeIds),
-        status: "pending",
-        triggerType: "batch_scan",
-        generationMeta: JSON.stringify(meta),
-        createdAt: new Date(),
-      },
-    });
+      await prisma.nudge.create({
+        data: {
+          userId: user.id,
+          suggestedCategory: output.suggestedCategory,
+          adjacentTo: JSON.stringify(output.adjacentTo),
+          copy: output.copy,
+          rationale: output.rationale,
+          riskReducers: JSON.stringify(output.riskReducers),
+          confidence: output.confidence,
+          evidenceThemeIds: JSON.stringify(output.evidenceThemeIds),
+          status: "pending",
+          triggerType: "batch_scan",
+          generationMeta: JSON.stringify(meta),
+          createdAt: new Date(),
+        },
+      });
 
-    created++;
-    console.log(
-      `  ✓ ${user.name}: ${output.suggestedCategory} [${meta.source}${meta.model ? ` · ${meta.model}` : ""} · ${meta.latencyMs}ms]`
-    );
+      created++;
+      console.log(
+        `  ✓ ${user.name}: ${output.suggestedCategory} [${meta.source}${meta.model ? ` · ${meta.model}` : ""} · ${meta.latencyMs}ms]`
+      );
+    } catch (err) {
+      console.warn(`  ✗ LLM nudge failed for ${user.name}:`, err);
+    }
   }
 
   return created;
@@ -208,5 +221,8 @@ async function seedNudgesForUser(userId: string, nudges: DemoNudgeSeed[]) {
 }
 
 main()
-  .catch(console.error)
+  .catch((err) => {
+    console.error(err);
+    process.exit(1);
+  })
   .finally(() => prisma.$disconnect());

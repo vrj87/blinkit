@@ -140,10 +140,10 @@ Check `summary.messages` for warnings and `required` for missing content hashes.
 
 ### `a3.snapshot is not a function` (Next.js 15)
 
-Root `netlify.toml` pins `@netlify/plugin-nextjs@5`. After pulling latest code:
+Root `netlify.toml` uses `@netlify/plugin-nextjs` (v5 from `package.json`). After pulling latest code:
 
 1. **Deploys → Clear cache and deploy site**
-2. Confirm build log shows plugin v5.x (not v4.x)
+2. Confirm build log shows plugin **v5.x** (not v4.x)
 
 ### 500 on page load (database)
 
