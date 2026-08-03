@@ -9,8 +9,11 @@ import type { OrderRow } from "@/lib/order-row";
 import { normalizeOrderRow } from "@/lib/order-row";
 import {
   loadCachedOrders,
+  loadUserDemoState,
   mergeOrders,
-  saveCachedOrders,
+  saveUserDemoState,
+  withNewOrder,
+  type UserDemoState,
 } from "@/lib/demo-order-cache";
 import { BlinkitPhoneShell, type BlinkitTab } from "@/components/BlinkitPhoneShell";
 import { DeliveryTracker } from "@/components/DeliveryTracker";
@@ -57,6 +60,7 @@ function normalizeNudgeRow(n: unknown): NudgeRow {
 
 interface DemoUserPageProps {
   embedded?: boolean;
+  onStatsChange?: (stats: UserDemoState) => void;
   user: {
     id: string;
     name: string;
@@ -70,23 +74,25 @@ interface DemoUserPageProps {
   };
 }
 
-export function DemoUserClient({ user, embedded = false }: DemoUserPageProps) {
+export function DemoUserClient({ user, embedded = false, onStatsChange }: DemoUserPageProps) {
   const router = useRouter();
   const hasPendingOnLoad = user.nudges.some((n) => n.status === "pending");
 
   const [orders, setOrders] = useState<OrderRow[]>(() =>
-    mergeOrders(
+    loadUserDemoState(
+      user.id,
       user.orders.map((o) => normalizeOrderRow(o)),
-      typeof window !== "undefined" ? loadCachedOrders(user.id) : []
-    )
+      user.orderCount
+    ).orders
   );
-  const [orderCount, setOrderCount] = useState(() => {
-    const merged = mergeOrders(
-      user.orders.map((o) => normalizeOrderRow(o)),
-      typeof window !== "undefined" ? loadCachedOrders(user.id) : []
-    );
-    return Math.max(user.orderCount, merged.length);
-  });
+  const [orderCount, setOrderCount] = useState(
+    () =>
+      loadUserDemoState(
+        user.id,
+        user.orders.map((o) => normalizeOrderRow(o)),
+        user.orderCount
+      ).orderCount
+  );
   const [nudges, setNudges] = useState<NudgeRow[]>(user.nudges);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -111,6 +117,16 @@ export function DemoUserClient({ user, embedded = false }: DemoUserPageProps) {
     (n) => n.status !== "pending" && n.id !== queuedNudge?.id
   );
   const firstName = user.name.split(" ")[0];
+
+  const applyDemoState = useCallback(
+    (next: UserDemoState) => {
+      setOrders(next.orders);
+      setOrderCount(next.orderCount);
+      saveUserDemoState(user.id, next);
+      onStatsChange?.(next);
+    },
+    [onStatsChange, user.id]
+  );
 
   const scrollToOrder = useCallback((orderId: string) => {
     requestAnimationFrame(() => {
@@ -141,21 +157,26 @@ export function DemoUserClient({ user, embedded = false }: DemoUserPageProps) {
         (data.user.orders ?? []).map(normalizeOrderRow),
         loadCachedOrders(user.id)
       );
-      setOrders(refreshedOrders);
-      saveCachedOrders(user.id, refreshedOrders);
-      setOrderCount(Math.max(data.user.orderCount ?? 0, refreshedOrders.length));
+      const next: UserDemoState = {
+        orders: refreshedOrders,
+        orderCount: Math.max(
+          data.user.orderCount ?? 0,
+          refreshedOrders.length
+        ),
+      };
+      applyDemoState(next);
       setNudges(
         (data.user.nudges ?? []).map((n: unknown) => normalizeNudgeRow(n))
       );
       router.refresh();
-      setMessage(`Synced ${refreshedOrders.length} orders`);
+      setMessage(`Synced ${next.orderCount} orders`);
       setTimeout(() => setMessage(""), 2500);
     } catch {
       setMessage("Refresh failed — check your connection");
     } finally {
       setRefreshing(false);
     }
-  }, [router, user.id]);
+  }, [router, user.id, applyDemoState]);
 
   useEffect(() => {
     if (!highlightOrderId || appTab !== "orders") return;
@@ -235,12 +256,8 @@ export function DemoUserClient({ user, embedded = false }: DemoUserPageProps) {
     if (!data.order) return;
 
     const newOrder = normalizeOrderRow(data.order);
-    setOrders((prev) => {
-      const next = [newOrder, ...prev.filter((o) => o.id !== newOrder.id)];
-      saveCachedOrders(user.id, next);
-      return next;
-    });
-    setOrderCount((c) => c + 1);
+    const next = withNewOrder(user.id, { orders, orderCount }, newOrder);
+    applyDemoState(next);
     setHighlightOrderId(newOrder.id);
     setAppTab("orders");
     scrollToOrder(newOrder.id);
@@ -261,6 +278,31 @@ export function DemoUserClient({ user, embedded = false }: DemoUserPageProps) {
     }
   }
 
+  function saveOrderLocally(
+    order: OrderRow,
+    meta: { itemCount: number; totalAmount: number },
+    note?: string
+  ) {
+    handleOrderPlaced({ order }, meta);
+    if (note) setMessage(note);
+  }
+
+  function createLocalDemoOrder(input: {
+    items: string[];
+    categories: string[];
+    totalAmount: number;
+    lineItems?: string | null;
+  }): OrderRow {
+    return normalizeOrderRow({
+      id: `demo-local-${Date.now()}`,
+      items: JSON.stringify(input.items),
+      categories: JSON.stringify(input.categories),
+      lineItems: input.lineItems ?? null,
+      totalAmount: input.totalAmount,
+      createdAt: new Date().toISOString(),
+    });
+  }
+
   async function placeOrder(basket: DemoBasket) {
     setLoading(true);
     setMessage("");
@@ -278,16 +320,30 @@ export function DemoUserClient({ user, embedded = false }: DemoUserPageProps) {
         }),
       });
       const data = await res.json();
+      const meta = { itemCount: basket.items.length, totalAmount: basket.totalAmount };
       if (!res.ok || data.error) {
-        setMessage(data.error ?? `Order failed (${res.status})`);
+        saveOrderLocally(
+          createLocalDemoOrder({
+            items: basket.items,
+            categories: basket.categories,
+            totalAmount: basket.totalAmount,
+          }),
+          meta,
+          "Order saved on this device — tap ↻ to retry server sync"
+        );
         return;
       }
-      handleOrderPlaced(data, {
-        itemCount: basket.items.length,
-        totalAmount: basket.totalAmount,
-      });
+      handleOrderPlaced(data, meta);
     } catch {
-      setMessage("Failed to place order. Is the dev server running?");
+      saveOrderLocally(
+        createLocalDemoOrder({
+          items: basket.items,
+          categories: basket.categories,
+          totalAmount: basket.totalAmount,
+        }),
+        { itemCount: basket.items.length, totalAmount: basket.totalAmount },
+        "Order saved on this device (offline)"
+      );
     } finally {
       setLoading(false);
     }
@@ -305,17 +361,33 @@ export function DemoUserClient({ user, embedded = false }: DemoUserPageProps) {
         body: JSON.stringify({ userId: user.id, lineItems }),
       });
       const data = await res.json();
+      const itemCount = lineItems.reduce((sum, row) => sum + row.quantity, 0);
+      const meta = { itemCount, totalAmount: data.order?.totalAmount ?? 0 };
       if (!res.ok || data.error) {
-        setMessage(data.error ?? `Order failed (${res.status})`);
+        const items = lineItems.map((row) => row.productId);
+        saveOrderLocally(
+          createLocalDemoOrder({
+            items,
+            categories: ["Groceries"],
+            totalAmount: meta.totalAmount || itemCount * 50,
+          }),
+          meta,
+          "Order saved on this device — tap ↻ to retry server sync"
+        );
         return;
       }
-      const itemCount = lineItems.reduce((sum, row) => sum + row.quantity, 0);
-      handleOrderPlaced(data, {
-        itemCount,
-        totalAmount: data.order?.totalAmount ?? 0,
-      });
+      handleOrderPlaced(data, meta);
     } catch {
-      setMessage("Failed to place order. Is the dev server running?");
+      const itemCount = lineItems.reduce((sum, row) => sum + row.quantity, 0);
+      saveOrderLocally(
+        createLocalDemoOrder({
+          items: lineItems.map((row) => row.productId),
+          categories: ["Groceries"],
+          totalAmount: itemCount * 50,
+        }),
+        { itemCount, totalAmount: itemCount * 50 },
+        "Order saved on this device (offline)"
+      );
     } finally {
       setLoading(false);
     }

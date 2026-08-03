@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { mergeOrders } from "../../../apps/mvp/lib/demo-order-cache";
+import {
+  loadUserDemoState,
+  mergeOrders,
+  withNewOrder,
+} from "../../../apps/mvp/lib/demo-order-cache";
 import { normalizeOrderRow } from "../../../apps/mvp/lib/order-row";
 
 describe("demo-order-cache", () => {
@@ -32,5 +36,22 @@ describe("demo-order-cache", () => {
     const merged = mergeOrders(server, cached);
     expect(merged.map((o) => o.id)).toEqual(["a", "b"]);
     expect(JSON.parse(merged[0].items)).toEqual(["Milk updated"]);
+  });
+
+  it("increments order count when adding a new order", () => {
+    const base = loadUserDemoState("user-1", [], 5);
+    const next = withNewOrder(
+      "user-1",
+      base,
+      normalizeOrderRow({
+        id: "new-1",
+        items: '["Bread"]',
+        categories: '["Groceries"]',
+        totalAmount: 40,
+        createdAt: "2026-01-04T00:00:00.000Z",
+      })
+    );
+    expect(next.orders).toHaveLength(1);
+    expect(next.orderCount).toBe(6);
   });
 });
