@@ -10,4 +10,4 @@
   DATABASE_URL = "file:./dev.db"
 
 [[plugins]]
-  package = "@netlify/plugin-nextjs@5"
+  package = "@netlify/plugin-nextjs"
