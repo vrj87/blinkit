@@ -33,6 +33,16 @@ if [[ ! -f dev.db ]]; then
 fi
 echo "Seeded database: $(du -h dev.db | cut -f1)"
 
+echo "=== Copy discovery + research data for serverless bundle ==="
+mkdir -p data/discovery data/research
+cp -rf ../../data/discovery/. data/discovery/
+cp -rf ../../data/research/. data/research/
+if [[ ! -f data/discovery/themes.json ]]; then
+  echo "ERROR: discovery data missing (data/discovery/themes.json)" >&2
+  exit 1
+fi
+echo "Bundled discovery: $(find data/discovery -type f | wc -l) files, research: $(find data/research -type f | wc -l) files"
+
 echo "=== Next.js build ==="
 npm run build
 

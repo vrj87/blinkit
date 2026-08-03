@@ -1,5 +1,6 @@
-import { existsSync, readFileSync } from "fs";
-import { dirname, join } from "path";
+import { join } from "path";
+import { readFileSync } from "fs";
+import { researchDataDir } from "@blinkit/discovery-core";
 
 export interface SurveyStat {
   label: string;
@@ -28,27 +29,8 @@ export interface SurveyEvidenceFile {
   byQuestion: Record<string, SurveyQuestionEvidence>;
 }
 
-function findRepoRoot(start = process.cwd()): string {
-  let dir = start;
-  for (;;) {
-    const pkgPath = join(dir, "package.json");
-    if (existsSync(pkgPath)) {
-      try {
-        const pkg = JSON.parse(readFileSync(pkgPath, "utf-8")) as { name?: string };
-        if (pkg.name === "blinkit-category-discovery") return dir;
-      } catch {
-        /* continue */
-      }
-    }
-    const parent = dirname(dir);
-    if (parent === dir) break;
-    dir = parent;
-  }
-  throw new Error("Could not find repo root");
-}
-
 export function surveyEvidencePath(): string {
-  return join(findRepoRoot(), "data/research/survey-evidence.json");
+  return join(researchDataDir(), "survey-evidence.json");
 }
 
 export function loadSurveyEvidence(): SurveyEvidenceFile | null {

@@ -1,5 +1,12 @@
 const path = require("path");
 
+const discoveryDataIncludes = [
+  "data/discovery/**/*",
+  "data/research/**/*",
+  "apps/mvp/data/discovery/**/*",
+  "apps/mvp/data/research/**/*",
+];
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   transpilePackages: ["@blinkit/discovery-core"],
@@ -11,16 +18,14 @@ const nextConfig = {
     },
     outputFileTracingIncludes: {
       "/mvp": ["apps/mvp/dev.db", "apps/mvp/prisma/dev.db"],
-      "/playground": [
-        "data/discovery/**/*",
-        "data/research/**/*",
-        "apps/mvp/dev.db",
-        "apps/mvp/prisma/dev.db",
-      ],
+      "/playground": [...discoveryDataIncludes, "apps/mvp/dev.db", "apps/mvp/prisma/dev.db"],
+      "/discovery/part1": discoveryDataIncludes,
+      "/discovery/part3": discoveryDataIncludes,
       "/demo/user/[id]": ["apps/mvp/dev.db", "apps/mvp/prisma/dev.db"],
       "/dashboard": ["apps/mvp/dev.db", "apps/mvp/prisma/dev.db"],
-      "/dashboard/discovery": ["data/discovery/**/*", "data/research/**/*"],
-      "/api/discovery": ["data/discovery/**/*", "data/research/**/*"],
+      "/dashboard/discovery": discoveryDataIncludes,
+      "/api/discovery": discoveryDataIncludes,
+      "/api/research/questions": discoveryDataIncludes,
       "/api/*": ["apps/mvp/dev.db", "apps/mvp/prisma/dev.db"],
     },
   },
