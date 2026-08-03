@@ -6,18 +6,9 @@ import {
   shortOrderId,
   type DemoBasket,
 } from "@/lib/demo-orders";
-import { parseOrderField, type OrderLineItemRow } from "@/lib/order-row";
+import { parseOrderField, type OrderLineItemRow, type OrderRow } from "@/lib/order-row";
 
-export interface OrderRow {
-  id: string;
-  items: string;
-  categories: string;
-  totalAmount: number;
-  createdAt: string;
-  lineItems?: string | null;
-}
-
-export type { OrderLineItemRow } from "@/lib/order-row";
+export type { OrderRow, OrderLineItemRow } from "@/lib/order-row";
 
 export function OrderHistory({
   orders,

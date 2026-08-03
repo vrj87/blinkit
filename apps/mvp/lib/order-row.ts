@@ -1,4 +1,11 @@
-import type { OrderRow } from "@/components/OrderHistory";
+export interface OrderRow {
+  id: string;
+  items: string;
+  categories: string;
+  totalAmount: number;
+  createdAt: string;
+  lineItems?: string | null;
+}
 
 export interface OrderLineItemRow {
   productId: string;

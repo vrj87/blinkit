@@ -32,7 +32,7 @@ export function BlinkitPhoneShell({
         <span className="blinkit-phone-signal">●●● ▮▮▮</span>
       </div>
 
-      <label className="blinkit-phone-search blinkit-phone-search-input-wrap">
+      <div className="blinkit-phone-search blinkit-phone-search-input-wrap">
         <span className="blinkit-phone-search-icon" aria-hidden>
           🔍
         </span>
@@ -67,7 +67,7 @@ export function BlinkitPhoneShell({
             {refreshing ? "…" : "↻"}
           </button>
         )}
-      </label>
+      </div>
 
       <div className="blinkit-phone-content">{children}</div>
 

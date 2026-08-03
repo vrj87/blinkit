@@ -4,8 +4,14 @@ import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { type DemoBasket } from "@/lib/demo-orders";
-import { OrderHistory, type OrderRow } from "@/components/OrderHistory";
+import { OrderHistory } from "@/components/OrderHistory";
+import type { OrderRow } from "@/lib/order-row";
 import { normalizeOrderRow } from "@/lib/order-row";
+import {
+  loadCachedOrders,
+  mergeOrders,
+  saveCachedOrders,
+} from "@/lib/demo-order-cache";
 import { BlinkitPhoneShell, type BlinkitTab } from "@/components/BlinkitPhoneShell";
 import { DeliveryTracker } from "@/components/DeliveryTracker";
 import { SmartCategoryNudge } from "@/components/SmartCategoryNudge";
@@ -68,8 +74,19 @@ export function DemoUserClient({ user, embedded = false }: DemoUserPageProps) {
   const router = useRouter();
   const hasPendingOnLoad = user.nudges.some((n) => n.status === "pending");
 
-  const [orders, setOrders] = useState<OrderRow[]>(user.orders);
-  const [orderCount, setOrderCount] = useState(user.orderCount);
+  const [orders, setOrders] = useState<OrderRow[]>(() =>
+    mergeOrders(
+      user.orders.map((o) => normalizeOrderRow(o)),
+      typeof window !== "undefined" ? loadCachedOrders(user.id) : []
+    )
+  );
+  const [orderCount, setOrderCount] = useState(() => {
+    const merged = mergeOrders(
+      user.orders.map((o) => normalizeOrderRow(o)),
+      typeof window !== "undefined" ? loadCachedOrders(user.id) : []
+    );
+    return Math.max(user.orderCount, merged.length);
+  });
   const [nudges, setNudges] = useState<NudgeRow[]>(user.nudges);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -120,9 +137,13 @@ export function DemoUserClient({ user, embedded = false }: DemoUserPageProps) {
         setMessage(data.error ?? "Could not refresh data");
         return;
       }
-      const refreshedOrders = (data.user.orders ?? []).map(normalizeOrderRow);
+      const refreshedOrders = mergeOrders(
+        (data.user.orders ?? []).map(normalizeOrderRow),
+        loadCachedOrders(user.id)
+      );
       setOrders(refreshedOrders);
-      setOrderCount(data.user.orderCount ?? refreshedOrders.length);
+      saveCachedOrders(user.id, refreshedOrders);
+      setOrderCount(Math.max(data.user.orderCount ?? 0, refreshedOrders.length));
       setNudges(
         (data.user.nudges ?? []).map((n: unknown) => normalizeNudgeRow(n))
       );
@@ -214,7 +235,11 @@ export function DemoUserClient({ user, embedded = false }: DemoUserPageProps) {
     if (!data.order) return;
 
     const newOrder = normalizeOrderRow(data.order);
-    setOrders((prev) => [newOrder, ...prev.filter((o) => o.id !== newOrder.id)]);
+    setOrders((prev) => {
+      const next = [newOrder, ...prev.filter((o) => o.id !== newOrder.id)];
+      saveCachedOrders(user.id, next);
+      return next;
+    });
     setOrderCount((c) => c + 1);
     setHighlightOrderId(newOrder.id);
     setAppTab("orders");

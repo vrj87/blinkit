@@ -2280,11 +2280,14 @@ nav.links a:hover {
 }
 
 .blinkit-phone-content {
-  flex: 1;
+  flex: 1 1 auto;
   min-height: 0;
   padding: 0 1rem 0.5rem;
+  overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  overscroll-behavior-y: contain;
 }
 
 .blinkit-bottom-nav {
@@ -3024,9 +3027,16 @@ nav.links a:hover {
 
 /* ——— MVP mobile (phones & tablets portrait) ——— */
 @media (max-width: 768px) {
+  html:has(.mvp-page),
+  html:has(.demo-user-page) {
+    height: 100%;
+  }
+
   body:has(.mvp-page),
   body:has(.demo-user-page) {
-    overflow-x: clip;
+    overflow: hidden;
+    height: 100dvh;
+    height: 100svh;
   }
 
   body:has(.mvp-page) .blinkit-chrome,
@@ -3045,10 +3055,12 @@ nav.links a:hover {
     max-width: none;
     padding: 0;
     margin: 0;
-    min-height: 100dvh;
-    min-height: 100svh;
+    height: 100dvh;
+    height: 100svh;
+    min-height: 0;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
   }
 
   .demo-user-page .back-link {
@@ -3080,8 +3092,9 @@ nav.links a:hover {
   .mvp-page .part4-page {
     display: flex;
     flex-direction: column;
-    min-height: 100dvh;
-    min-height: 100svh;
+    flex: 1;
+    min-height: 0;
+    height: 100%;
   }
 
   .mvp-page .part4-demo-section {
@@ -3125,7 +3138,8 @@ nav.links a:hover {
     padding: 0.45rem 0.65rem;
   }
 
-  .mvp-page .blinkit-app-embed {
+  .mvp-page .blinkit-app-embed,
+  .mvp-page .blinkit-app-embed-fit {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -3133,13 +3147,15 @@ nav.links a:hover {
     max-height: none;
     margin: 0;
     width: 100%;
+    height: 100%;
   }
 
   .mvp-page .blinkit-phone,
   .demo-user-page .blinkit-phone {
+    flex: 1;
     width: 100%;
     max-width: none;
-    height: auto;
+    height: 100%;
     min-height: 0;
     max-height: none;
     border: none;
@@ -3168,7 +3184,8 @@ nav.links a:hover {
   .demo-user-page .blinkit-phone-content {
     padding-left: max(0.75rem, env(safe-area-inset-left, 0px));
     padding-right: max(0.75rem, env(safe-area-inset-right, 0px));
-    overscroll-behavior: contain;
+    touch-action: pan-y;
+    overscroll-behavior-y: contain;
   }
 
   .mvp-page .blinkit-bottom-nav,
