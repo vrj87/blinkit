@@ -1,0 +1,70 @@
+{
+  "name": "Blinkit Category Nudge - Post Order",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "order-completed",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Order Completed Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{$env.MVP_APP_URL}}/api/events/order",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "x-webhook-secret",
+              "value": "={{$env.N8N_WEBHOOK_SECRET}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"userId\": \"{{ $json.body.userId }}\", \"items\": {{ $json.body.items }}, \"categories\": {{ $json.body.categories }}, \"totalAmount\": {{ $json.body.totalAmount }}}"
+      },
+      "id": "call-mvp-order",
+      "name": "Call MVP Order API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}"
+      },
+      "id": "respond",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [750, 300]
+    }
+  ],
+  "connections": {
+    "Order Completed Webhook": {
+      "main": [[{ "node": "Call MVP Order API", "type": "main", "index": 0 }]]
+    },
+    "Call MVP Order API": {
+      "main": [[{ "node": "Respond to Webhook", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "meta": {
+    "description": "Triggered when a user completes an order. Calls Next.js MVP to create order and generate category nudge if eligible."
+  }
+}

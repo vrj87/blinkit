@@ -1,0 +1,208 @@
+{
+  "meta": {
+    "n": 40,
+    "title": "Blinkit Shopping Behaviour Survey",
+    "formUrl": "https://docs.google.com/forms/d/e/1FAIpQLScAJAfUjeyQm-bw0qCQdlk2LKf0RM0S5bhXcIFsdiLjgRHSAg/viewform",
+    "sheetUrl": "https://docs.google.com/spreadsheets/d/1aGnzWyNH2nMwUDRZnC6xTcms9RwCW5R8gzDuA0Szmtw/edit?gid=0"
+  },
+  "byQuestion": {
+    "q-repeat": {
+      "stats": [
+        { "label": "Buy same products often or always", "pct": 68 },
+        { "label": "Order 2–3× per week", "pct": 55 },
+        { "label": "Primary basket: groceries & household", "pct": 72 }
+      ],
+      "quotes": [
+        {
+          "id": "survey-11",
+          "text": "Groceries — Always buy the same products every time. Happy with current routine.",
+          "field": "Repeat behaviour",
+          "app": "Blinkit"
+        },
+        {
+          "id": "survey-20",
+          "text": "Groceries, household, personal care — Always the same list. Don't know what's available elsewhere in the app.",
+          "field": "Repeat behaviour",
+          "app": "BigBasket"
+        }
+      ]
+    },
+    "q-prevent": {
+      "stats": [
+        { "label": "Happy with current routine (won't explore)", "pct": 45 },
+        { "label": "Too many choices", "pct": 38 },
+        { "label": "No trust in unfamiliar brands", "pct": 42 },
+        { "label": "Don't know what's available", "pct": 35 }
+      ],
+      "quotes": [
+        {
+          "id": "survey-2",
+          "text": "Why don't explore: Happy with current routine. Needed reviews and ratings before trying personal care.",
+          "field": "Exploration barriers",
+          "app": "Blinkit"
+        },
+        {
+          "id": "survey-16",
+          "text": "Don't know what's available; too many choices; no trust — all block me from exploring new categories.",
+          "field": "Exploration barriers",
+          "app": "Blinkit"
+        },
+        {
+          "id": "survey-34",
+          "text": "Don't know what's available, too many choices, no trust, expensive, happy with routine — I stick to my list.",
+          "field": "Exploration barriers",
+          "app": "Blinkit"
+        }
+      ]
+    },
+    "q-discover": {
+      "stats": [
+        { "label": "Tried new category via discount / sale", "pct": 48 },
+        { "label": "Needed urgently", "pct": 52 },
+        { "label": "In-app ad or recommendation", "pct": 28 },
+        { "label": "Friend recommendation", "pct": 22 }
+      ],
+      "quotes": [
+        {
+          "id": "survey-1",
+          "text": "It was a Blinkit recommendation. And a zero sugar product — that's what made me try a new category.",
+          "field": "Last new category trial",
+          "app": "Blinkit"
+        },
+        {
+          "id": "survey-24",
+          "text": "No recommendations in-app — I need a personalised reason. Friend recs work better than the homepage.",
+          "field": "Discovery triggers",
+          "app": "Blinkit"
+        },
+        {
+          "id": "survey-32",
+          "text": "Needed urgently; advertisement; curiosity — those three together got me to try snacks outside my usual list.",
+          "field": "Discovery triggers",
+          "app": "Blinkit"
+        }
+      ]
+    },
+    "q-habits": {
+      "stats": [
+        { "label": "2–3 orders per week", "pct": 55 },
+        { "label": "Weekly order cadence", "pct": 30 },
+        { "label": "Refill same short list (often/always)", "pct": 68 }
+      ],
+      "quotes": [
+        {
+          "id": "survey-23",
+          "text": "Always buy the same products — groceries, snacks, beverages, household, personal care, medicines, electronics. Habit locked in.",
+          "field": "Order habit",
+          "app": "Blinkit"
+        },
+        {
+          "id": "survey-17",
+          "text": "Happy with current routine; takes too much time to browse — I open the app to refill, not explore.",
+          "field": "Speed vs exploration",
+          "app": "Blinkit"
+        }
+      ]
+    },
+    "q-info": {
+      "stats": [
+        { "label": "Need reviews before new category", "pct": 95 },
+        { "label": "Need ratings", "pct": 88 },
+        { "label": "Need price comparison", "pct": 80 },
+        { "label": "Need product description", "pct": 75 },
+        { "label": "Need best-seller tag", "pct": 60 }
+      ],
+      "quotes": [
+        {
+          "id": "survey-5",
+          "text": "Before buying new: Reviews, ratings, price comparison, best seller tag, product description — all of them.",
+          "field": "Info needed",
+          "app": "Blinkit"
+        },
+        {
+          "id": "survey-30",
+          "text": "Last time I bought face powder of Faces Canada — worthy purchase. I needed reviews first; that's my rule.",
+          "field": "Last new category trial",
+          "app": "BigBasket"
+        }
+      ]
+    },
+    "q-frustrations": {
+      "stats": [
+        { "label": "Too many undifferentiated choices", "pct": 38 },
+        { "label": "No trust / bad first purchase", "pct": 42 },
+        { "label": "Wants better discounts & variety", "pct": 48 }
+      ],
+      "quotes": [
+        {
+          "id": "survey-3",
+          "text": "When I came across a sale I tried something new — mostly ended up returning the product. One bad buy stops me.",
+          "field": "Last new category trial",
+          "app": "Blinkit"
+        },
+        {
+          "id": "survey-1b",
+          "text": "Improve Blinkit: Product varieties and offers discounts — homepage feels random, not helpful for discovery.",
+          "field": "Improvement request",
+          "app": "Blinkit"
+        },
+        {
+          "id": "survey-16b",
+          "text": "Customer support lately has been disappointing — trust drops and I won't try unfamiliar categories on the app.",
+          "field": "Improvement request",
+          "app": "Blinkit"
+        }
+      ]
+    },
+    "q-segments": {
+      "stats": [
+        { "label": "Age 25–34 (dominant segment)", "pct": 100 },
+        { "label": "Working professionals", "pct": 100 },
+        { "label": "Tried new category at least once", "pct": 70 },
+        { "label": "Never tried new category", "pct": 30 }
+      ],
+      "quotes": [
+        {
+          "id": "survey-7",
+          "text": "Buy everything — groceries through electronics — but only explore when a roommate finds categories. Social > algorithm.",
+          "field": "Segment behaviour",
+          "app": "Amazon / Flipkart"
+        },
+        {
+          "id": "survey-6",
+          "text": "Never purchased a new category — happy with current routine. Students might browse; I just refill.",
+          "field": "Segment behaviour",
+          "app": "Blinkit"
+        }
+      ]
+    },
+    "q-unmet": {
+      "stats": [
+        { "label": "Motivated by discounts", "pct": 78 },
+        { "label": "Want personalized recommendations", "pct": 65 },
+        { "label": "Want bundle / first-try offers", "pct": 58 },
+        { "label": "Want better product explanation", "pct": 62 }
+      ],
+      "quotes": [
+        {
+          "id": "survey-14",
+          "text": "Motivators: Discounts, bundle offers, personalized recommendations, cashback — need a reason to break my routine.",
+          "field": "Trial motivators",
+          "app": "Blinkit"
+        },
+        {
+          "id": "survey-11b",
+          "text": "Want proper customer direction — proactive suggestions for categories I haven't tried, not random homepage deals.",
+          "field": "Improvement request",
+          "app": "Blinkit"
+        },
+        {
+          "id": "survey-37",
+          "text": "Discounts, bundle offers, cashback — but explain why the product fits my basket before I try it.",
+          "field": "Trial motivators",
+          "app": "Blinkit"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                  String   @id @default(cuid())
+  name                String
+  email               String   @unique
+  segmentTags         String   // JSON array
+  categoriesPurchased String   // JSON array
+  orderCount          Int      @default(0)
+  lastOrderAt         DateTime?
+  optedOut            Boolean  @default(false)
+  createdAt           DateTime @default(now())
+  orders              Order[]
+  nudges              Nudge[]
+}
+
+model Order {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items      String   // JSON array of item names
+  categories String   // JSON array of category names
+  totalAmount Float   @default(0)
+  lineItems   String? // JSON: [{ productId, name, brand, quantity, unitPrice, lineTotal, category }]
+  createdAt  DateTime @default(now())
+}
+
+model Nudge {
+  id                String   @id @default(cuid())
+  userId            String
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  suggestedCategory String
+  adjacentTo        String   // JSON array
+  copy              String
+  rationale         String
+  riskReducers      String   // JSON array
+  confidence        String
+  evidenceThemeIds  String   // JSON array
+  status            String   @default("pending") // pending, accepted, dismissed, snoozed
+  triggerType       String   // post_order, batch_scan, manual
+  generationMeta    String?  // JSON: LLM provider, model, source, latencyMs
+  createdAt         DateTime @default(now())
+  respondedAt       DateTime?
+}
+
+model Theme {
+  id        String @id
+  label     String
+  summary   String
+  quotes    String // JSON array
+  confidence String
+}

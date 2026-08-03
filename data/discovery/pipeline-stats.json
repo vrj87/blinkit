@@ -1,0 +1,16 @@
+{
+  "processedAt": "2026-08-03T06:21:16.380Z",
+  "inputCount": 650,
+  "afterDedup": 650,
+  "afterFilter": 577,
+  "chunkCount": 24,
+  "sourceBreakdown": {
+    "play_store": 40,
+    "reddit": 136,
+    "app_store": 121,
+    "forum": 64,
+    "social": 36,
+    "product_review": 180
+  },
+  "inputOrigin": "web_ui"
+}

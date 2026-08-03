@@ -1,0 +1,35 @@
+{
+  "version": "1.0.0",
+  "phase": "1a",
+  "inputSource": "basic_web_ui",
+  "northStar": "Increase % MAC buying from at least one new category per month",
+  "targetSegment": {
+    "label": "weekly_essentials_repeat_buyer",
+    "criteria": [
+      "3+ orders per month",
+      "Primary: Groceries / Household Essentials",
+      "≤2 categories in 90 days",
+      "Has not bought Personal Care, Pet, or Baby on Blinkit"
+    ]
+  },
+  "keywords": [
+    "blinkit", "instamart", "quick commerce", "reorder", "buy again",
+    "new category", "personal care", "pet supplies", "baby products",
+    "household essentials", "groceries", "discovery", "trial pack", "trust", "habit"
+  ],
+  "segmentHints": [
+    "weekly_essentials_buyer", "student", "new_parent", "pet_owner",
+    "urban_professional", "household_buyer", "young_professional"
+  ],
+  "researchQuestions": [
+    "Why do users repeatedly buy from the same categories?",
+    "What prevents users from exploring new categories?",
+    "How do users discover products today?",
+    "What role do habits play in shopping behavior?",
+    "What information do users need before trying a new category?",
+    "What frustrations emerge repeatedly?",
+    "Which user segments are more likely to experiment?",
+    "What unmet needs emerge consistently across discussions?"
+  ],
+  "targetVolume": { "min": 200, "ideal": 500 }
+}

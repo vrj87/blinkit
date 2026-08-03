@@ -1,0 +1,28 @@
+{
+  "name": "discovery-pipeline",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "collect:scrape": "tsx scrapers/collect-all.ts",
+    "collect:sample": "tsx scrapers/generate-sample-data.ts",
+    "discovery:refresh": "tsx scrapers/scheduled-refresh.ts",
+    "pipeline:run": "tsx pipelines/run.ts",
+    "pipeline:analyze": "tsx pipelines/analyze-themes.ts",
+    "pipeline:validate": "tsx pipelines/validate-insights.ts"
+  },
+  "dependencies": {
+    "@blinkit/discovery-core": "*",
+    "csv-parse": "^5.6.0",
+    "csv-stringify": "^6.5.2",
+    "dotenv": "^16.4.7",
+    "google-play-scraper": "^10.1.2",
+    "openai": "^4.77.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

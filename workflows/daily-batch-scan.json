@@ -1,0 +1,88 @@
+{
+  "name": "Blinkit Category Nudge - Daily Batch Scan",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{ "field": "hours", "hoursInterval": 24 }]
+        }
+      },
+      "id": "cron-trigger",
+      "name": "Daily Cron",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{$env.MVP_APP_URL}}/api/workflows/scan-users",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "x-webhook-secret",
+              "value": "={{$env.N8N_WEBHOOK_SECRET}}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{}"
+      },
+      "id": "scan-users",
+      "name": "Scan Eligible Users",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.eligible }}",
+              "operation": "larger",
+              "value2": 0
+            }
+          ]
+        }
+      },
+      "id": "if-eligible",
+      "name": "Any Eligible?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [750, 300]
+    },
+    {
+      "parameters": {
+        "content": "=Daily scan complete: {{ $json.scanned }} users scanned, {{ $json.nudgesCreated }} nudges created.",
+        "height": 200,
+        "width": 300
+      },
+      "id": "note-success",
+      "name": "Log Success",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [950, 200]
+    }
+  ],
+  "connections": {
+    "Daily Cron": {
+      "main": [[{ "node": "Scan Eligible Users", "type": "main", "index": 0 }]]
+    },
+    "Scan Eligible Users": {
+      "main": [[{ "node": "Any Eligible?", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "meta": {
+    "description": "Daily batch job that scans all users for category expansion eligibility and creates nudges."
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "validatedAt": "2026-07-30T13:55:36.796Z",
+  "totalThemes": 10,
+  "passed": 10,
+  "failed": 0,
+  "results": [
+    {
+      "themeId": "theme-habit-reorder",
+      "passed": true,
+      "checks": {
+        "minQuotes": true,
+        "multiSource": true,
+        "actionable": true,
+        "evidenceLinked": true
+      },
+      "notes": "Theme meets quality bar for interview probing."
+    },
+    {
+      "themeId": "theme-speed-transactional",
+      "passed": true,
+      "checks": {
+        "minQuotes": true,
+        "multiSource": true,
+        "actionable": true,
+        "evidenceLinked": true
+      },
+      "notes": "Theme meets quality bar for interview probing."
+    },
+    {
+      "themeId": "theme-trust-risk",
+      "passed": true,
+      "checks": {
+        "minQuotes": true,
+        "multiSource": true,
+        "actionable": true,
+        "evidenceLinked": true
+      },
+      "notes": "Theme meets quality bar for interview probing."
+    },
+    {
+      "themeId": "theme-discovery-friction",
+      "passed": true,
+      "checks": {
+        "minQuotes": true,
+        "multiSource": true,
+        "actionable": true,
+        "evidenceLinked": true
+      },
+      "notes": "Theme meets quality bar for interview probing."
+    },
+    {
+      "themeId": "theme-social-wom",
+      "passed": true,
+      "checks": {
+        "minQuotes": true,
+        "multiSource": true,
+        "actionable": true,
+        "evidenceLinked": true
+      },
+      "notes": "Theme meets quality bar for interview probing."
+    },
+    {
+      "themeId": "theme-choice-overload",
+      "passed": true,
+      "checks": {
+        "minQuotes": true,
+        "multiSource": true,
+        "actionable": true,
+        "evidenceLinked": true
+      },
+      "notes": "Theme meets quality bar for interview probing."
+    },
+    {
+      "themeId": "theme-incentives",
+      "passed": true,
+      "checks": {
+        "minQuotes": true,
+        "multiSource": true,
+        "actionable": true,
+        "evidenceLinked": true
+      },
+      "notes": "Theme meets quality bar for interview probing."
+    },
+    {
+      "themeId": "theme-segment-students",
+      "passed": true,
+      "checks": {
+        "minQuotes": true,
+        "multiSource": true,
+        "actionable": true,
+        "evidenceLinked": true
+      },
+      "notes": "Theme meets quality bar for interview probing."
+    },
+    {
+      "themeId": "theme-lifestage",
+      "passed": true,
+      "checks": {
+        "minQuotes": true,
+        "multiSource": false,
+        "actionable": true,
+        "evidenceLinked": true
+      },
+      "notes": "Theme meets quality bar for interview probing."
+    },
+    {
+      "themeId": "theme-bad-first-experience",
+      "passed": true,
+      "checks": {
+        "minQuotes": true,
+        "multiSource": true,
+        "actionable": true,
+        "evidenceLinked": true
+      },
+      "notes": "Theme meets quality bar for interview probing."
+    }
+  ],
+  "readyForPhase2": true
+}

@@ -1,0 +1,33 @@
+{
+  "name": "blinkit-category-discovery",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "tools/discovery-pipeline"
+  ],
+  "scripts": {
+    "discovery:scrape": "npm run collect:scrape -w discovery-pipeline",
+    "discovery:refresh": "npm run discovery:refresh -w discovery-pipeline",
+    "discovery:all": "npm run discovery:refresh -w discovery-pipeline",
+    "dev": "npm run dev -w category-explorer-mvp",
+    "dev:collect": "npm run dev -w collect",
+    "expand:corpus": "npm run expand-corpus -w collect",
+    "build": "npm run build -w category-explorer-mvp",
+    "db:seed": "npm run db:seed -w category-explorer-mvp",
+    "backend:setup": "powershell -ExecutionPolicy Bypass -File scripts/setup-backend.ps1",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:mvp": "vitest run tests/mvp"
+  },
+  "devDependencies": {
+    "vitest": "^3.2.7"
+  },
+  "allowScripts": {
+    "@prisma/client@6.19.3": true,
+    "@prisma/engines@6.19.3": true,
+    "esbuild@0.28.1": true,
+    "prisma@6.19.3": true,
+    "sharp@0.34.5": true
+  }
+}

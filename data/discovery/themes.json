@@ -1,0 +1,354 @@
+{
+  "generatedAt": "2026-07-30T13:55:35.809Z",
+  "reviewCount": 577,
+  "themes": [
+    {
+      "id": "theme-habit-reorder",
+      "label": "Reorder loops create category lock-in",
+      "summary": "Users rely on 'Buy Again' and saved lists for speed, which reinforces buying the same groceries and snacks weekly.",
+      "researchQuestion": "Why do users repeatedly buy from the same categories?",
+      "sentiment": "mixed",
+      "confidence": "high",
+      "actionableInsight": "Introduce post-reorder nudges that don't interrupt checkout flow — suggest one adjacent category after order confirmation.",
+      "segmentHints": [
+        "weekly_essentials_buyer",
+        "young_professional"
+      ],
+      "frequency": 56,
+      "quotes": [
+        {
+          "reviewId": "rev-001",
+          "text": "I use Blinkit every week for milk, bread, and vegetables. Same list every time because I know exactly what I'll get in 10 minutes. Never tried their personal care section â€” not sure if brands are genu...",
+          "source": "play_store",
+          "url": "https://play.google.com/store/apps/details?id=com.grofers.customerapp"
+        },
+        {
+          "reviewId": "rev-002",
+          "text": "Quick commerce ruined my exploratory shopping. I just reorder from order history. Blinkit has so many categories but I stick to snacks and beverages because browsing takes too long when you need stuff...",
+          "source": "reddit",
+          "url": "https://reddit.com/r/india/comments/sample1"
+        },
+        {
+          "reviewId": "rev-005",
+          "text": "Blinkit is my emergency grocery app. Same 12 items monthly. Tried pet food once because of a banner â€” product was good but I forgot about it. Need reminders for categories I don't usually buy.",
+          "source": "play_store",
+          "url": "https://play.google.com/store/apps/details?id=com.grofers.customerapp"
+        }
+      ]
+    },
+    {
+      "id": "theme-speed-transactional",
+      "label": "10-minute promise optimizes for speed, not exploration",
+      "summary": "Quick delivery trains transactional refills. Users don't enter a 'browse' mindset when urgency is the primary job-to-be-done.",
+      "researchQuestion": "What role do habits play in shopping behavior?",
+      "sentiment": "negative",
+      "confidence": "high",
+      "actionableInsight": "Create a separate 'Explore' moment async from urgent orders — e.g., post-delivery email with one curated category.",
+      "segmentHints": [
+        "weekly_essentials_buyer",
+        "urban_professional"
+      ],
+      "frequency": 86,
+      "quotes": [
+        {
+          "reviewId": "rev-001",
+          "text": "I use Blinkit every week for milk, bread, and vegetables. Same list every time because I know exactly what I'll get in 10 minutes. Never tried their personal care section â€” not sure if brands are genu...",
+          "source": "play_store",
+          "url": "https://play.google.com/store/apps/details?id=com.grofers.customerapp"
+        },
+        {
+          "reviewId": "rev-005",
+          "text": "Blinkit is my emergency grocery app. Same 12 items monthly. Tried pet food once because of a banner â€” product was good but I forgot about it. Need reminders for categories I don't usually buy.",
+          "source": "play_store",
+          "url": "https://play.google.com/store/apps/details?id=com.grofers.customerapp"
+        },
+        {
+          "reviewId": "rev-006",
+          "text": "Why explore new categories on a 10-minute delivery app? If I want to try skincare I'll go to Nykaa where I can read reviews. Quick commerce feels risky for anything I can't instantly recognize.",
+          "source": "reddit",
+          "url": "https://reddit.com/r/IndianSkincareAddicts/comments/sample2"
+        }
+      ]
+    },
+    {
+      "id": "theme-trust-risk",
+      "label": "Unfamiliar categories feel risky on quick commerce",
+      "summary": "Users hesitate on personal care, baby, and skincare due to authenticity, expiry, and wrong-purchase fears.",
+      "researchQuestion": "What prevents users from exploring new categories?",
+      "sentiment": "negative",
+      "confidence": "high",
+      "actionableInsight": "Lead with risk reducers: trial packs, bestseller badges, clear expiry/MRP, easy returns messaging.",
+      "segmentHints": [
+        "new_parent",
+        "urban_professional"
+      ],
+      "frequency": 79,
+      "quotes": [
+        {
+          "reviewId": "rev-001",
+          "text": "I use Blinkit every week for milk, bread, and vegetables. Same list every time because I know exactly what I'll get in 10 minutes. Never tried their personal care section â€” not sure if brands are genu...",
+          "source": "play_store",
+          "url": "https://play.google.com/store/apps/details?id=com.grofers.customerapp"
+        },
+        {
+          "reviewId": "rev-004",
+          "text": "As a new parent I started buying baby products on Instamart after a friend recommended specific diapers. Would never have searched for it myself â€” too many options and I can't afford a wrong purchas...",
+          "source": "forum",
+          "url": "https://forum.sample/quickcommerce/baby"
+        },
+        {
+          "reviewId": "rev-006",
+          "text": "Why explore new categories on a 10-minute delivery app? If I want to try skincare I'll go to Nykaa where I can read reviews. Quick commerce feels risky for anything I can't instantly recognize.",
+          "source": "reddit",
+          "url": "https://reddit.com/r/IndianSkincareAddicts/comments/sample2"
+        }
+      ]
+    },
+    {
+      "id": "theme-discovery-friction",
+      "label": "In-app discovery is broken for unknown unknowns",
+      "summary": "Homepage discounts and search (for known items) don't help users find categories they aren't already looking for.",
+      "researchQuestion": "How do users discover products today?",
+      "sentiment": "negative",
+      "confidence": "high",
+      "actionableInsight": "Use 'people like you also tried' and adjacent-category recommendations tied to order history.",
+      "segmentHints": [
+        "home_cook",
+        "household_buyer"
+      ],
+      "frequency": 93,
+      "quotes": [
+        {
+          "reviewId": "rev-003",
+          "text": "App is fast but discovery is terrible. Homepage is all discounts on random stuff. I wish it showed 'people who buy dal also tried these spices' â€” would help me expand beyond groceries.",
+          "source": "app_store",
+          "url": "https://apps.apple.com/app/blinkit-grocery/id1587114817"
+        },
+        {
+          "reviewId": "rev-004",
+          "text": "As a new parent I started buying baby products on Instamart after a friend recommended specific diapers. Would never have searched for it myself â€” too many options and I can't afford a wrong purchas...",
+          "source": "forum",
+          "url": "https://forum.sample/quickcommerce/baby"
+        },
+        {
+          "reviewId": "rev-008",
+          "text": "Search is fine for known items but I never find new categories. Bought household cleaners for 6 months, didn't know they had kitchen organizers until I saw a friend's order.",
+          "source": "play_store",
+          "url": "https://play.google.com/store/apps/details?id=com.grofers.customerapp"
+        }
+      ]
+    },
+    {
+      "id": "theme-social-wom",
+      "label": "Social proof and word-of-mouth drive first trial",
+      "summary": "Friends, WhatsApp groups, and Instagram tips trigger first purchases in new categories — not in-app browsing.",
+      "researchQuestion": "How do users discover products today?",
+      "sentiment": "positive",
+      "confidence": "high",
+      "actionableInsight": "Surface anonymized social proof in nudges: '847 pet owners in your area tried this'.",
+      "segmentHints": [
+        "pet_owner",
+        "student",
+        "new_parent"
+      ],
+      "frequency": 91,
+      "quotes": [
+        {
+          "reviewId": "rev-004",
+          "text": "As a new parent I started buying baby products on Instamart after a friend recommended specific diapers. Would never have searched for it myself â€” too many options and I can't afford a wrong purchas...",
+          "source": "forum",
+          "url": "https://forum.sample/quickcommerce/baby"
+        },
+        {
+          "reviewId": "rev-008",
+          "text": "Search is fine for known items but I never find new categories. Bought household cleaners for 6 months, didn't know they had kitchen organizers until I saw a friend's order.",
+          "source": "play_store",
+          "url": "https://play.google.com/store/apps/details?id=com.grofers.customerapp"
+        },
+        {
+          "reviewId": "rev-009",
+          "text": "Students like me use quick commerce for instant noodles and drinks. We experiment more when friends share links. Nobody explores baby or pet categories obviously.",
+          "source": "reddit",
+          "url": "https://reddit.com/r/india/comments/sample3"
+        }
+      ]
+    },
+    {
+      "id": "theme-choice-overload",
+      "label": "Too many options paralyze quick decisions",
+      "summary": "Wide catalogs in snacks and household create choice overload when users have minutes to checkout.",
+      "researchQuestion": "What information do users need before trying a new category?",
+      "sentiment": "negative",
+      "confidence": "high",
+      "actionableInsight": "Offer curated starter packs with 3-5 items instead of full category browse.",
+      "segmentHints": [
+        "urban_professional",
+        "student"
+      ],
+      "frequency": 22,
+      "quotes": [
+        {
+          "reviewId": "rev-004",
+          "text": "As a new parent I started buying baby products on Instamart after a friend recommended specific diapers. Would never have searched for it myself â€” too many options and I can't afford a wrong purchas...",
+          "source": "forum",
+          "url": "https://forum.sample/quickcommerce/baby"
+        },
+        {
+          "reviewId": "rev-012",
+          "text": "Categories feel overwhelming. Hundreds of chips brands. When I'm in a hurry I pick what I know. Need curated 'starter packs' for new categories.",
+          "source": "play_store",
+          "url": "https://play.google.com/store/apps/details?id=com.grofers.customerapp"
+        },
+        {
+          "reviewId": "exp-0028",
+          "text": "Too many chip brands on Blinkit â€” when in a hurry I pick what I know. Need curated starter packs. [variant 2]",
+          "source": "forum",
+          "url": "https://phase-1a.local/corpus/forum/27"
+        }
+      ]
+    },
+    {
+      "id": "theme-incentives",
+      "label": "Promos and trial pricing unlock experimentation",
+      "summary": "Users expand categories when incentives lower perceived risk — free delivery thresholds, ₹99 trials, trending badges.",
+      "researchQuestion": "What information do users need before trying a new category?",
+      "sentiment": "positive",
+      "confidence": "high",
+      "actionableInsight": "Bundle trial-size SKUs with free-delivery or post-order discount on first category purchase.",
+      "segmentHints": [
+        "household_buyer",
+        "young_professional"
+      ],
+      "frequency": 60,
+      "quotes": [
+        {
+          "reviewId": "rev-007",
+          "text": "My Blinkit order history is embarrassing â€” literally the same chips and Coke every Friday. The app should nudge me to try new snacks with small trial packs.",
+          "source": "social",
+          "url": "https://twitter.com/sample/status/123"
+        },
+        {
+          "reviewId": "rev-016",
+          "text": "Would try new categories if there was a 'â‚¹99 trial' badge and easy returns. Right now exploring feels like gambling with delivery slots.",
+          "source": "play_store",
+          "url": "https://play.google.com/store/apps/details?id=com.grofers.customerapp"
+        },
+        {
+          "reviewId": "rev-020",
+          "text": "Gen Z me tries weird snack flavors when Blinkit pushes 'trending'. Boomer parents stick to rice and dal. Segment matters for experimentation.",
+          "source": "social",
+          "url": "https://twitter.com/sample/status/789"
+        }
+      ]
+    },
+    {
+      "id": "theme-segment-students",
+      "label": "Students and young professionals experiment more with snacks",
+      "summary": "Younger segments try new snack flavors and social-shared items; essentials buyers and new parents are more cautious.",
+      "researchQuestion": "Which user segments are more likely to experiment?",
+      "sentiment": "mixed",
+      "confidence": "high",
+      "actionableInsight": "Prioritize snack→personal care and snack→frozen food nudges for 18-28 age band.",
+      "segmentHints": [
+        "student",
+        "young_professional"
+      ],
+      "frequency": 41,
+      "quotes": [
+        {
+          "reviewId": "rev-009",
+          "text": "Students like me use quick commerce for instant noodles and drinks. We experiment more when friends share links. Nobody explores baby or pet categories obviously.",
+          "source": "reddit",
+          "url": "https://reddit.com/r/india/comments/sample3"
+        },
+        {
+          "reviewId": "rev-020",
+          "text": "Gen Z me tries weird snack flavors when Blinkit pushes 'trending'. Boomer parents stick to rice and dal. Segment matters for experimentation.",
+          "source": "social",
+          "url": "https://twitter.com/sample/status/789"
+        },
+        {
+          "reviewId": "rev-025",
+          "text": "Roommates share a Blinkit cart. One person finds new categories, others free-ride on their discovery. Social discovery > algorithm for us.",
+          "source": "social",
+          "url": "https://twitter.com/sample/status/101"
+        }
+      ]
+    },
+    {
+      "id": "theme-lifestage",
+      "label": "Life-stage transitions are missed opportunities",
+      "summary": "Users expect apps to recognize life events (new parent, pet adoption) and proactively suggest relevant categories.",
+      "researchQuestion": "What unmet needs emerge consistently across discussions?",
+      "sentiment": "negative",
+      "confidence": "medium",
+      "actionableInsight": "Add life-event onboarding triggers or infer from first baby/pet product search.",
+      "segmentHints": [
+        "new_parent",
+        "pet_owner"
+      ],
+      "frequency": 18,
+      "quotes": [
+        {
+          "reviewId": "rev-004",
+          "text": "As a new parent I started buying baby products on Instamart after a friend recommended specific diapers. Would never have searched for it myself â€” too many options and I can't afford a wrong purchas...",
+          "source": "forum",
+          "url": "https://forum.sample/quickcommerce/baby"
+        },
+        {
+          "reviewId": "rev-021",
+          "text": "Unmet need: tell me what category fits my life stage. Just had a kid â€” app still shows beer and chips as top picks. No life-event triggers.",
+          "source": "forum",
+          "url": "https://forum.sample/quickcommerce/lifestage"
+        },
+        {
+          "reviewId": "exp-0034",
+          "text": "As a new parent I bought wrong-size baby wipes once on quick commerce. Now I stick to Amazon for baby products. [variant 3]",
+          "source": "forum",
+          "url": "https://phase-1a.local/corpus/forum/33"
+        }
+      ]
+    },
+    {
+      "id": "theme-bad-first-experience",
+      "label": "One bad first purchase stops category exploration",
+      "summary": "A single wrong-size or low-quality item in a new category pushes users back to trusted channels like Amazon.",
+      "researchQuestion": "What frustrations emerge repeatedly?",
+      "sentiment": "negative",
+      "confidence": "high",
+      "actionableInsight": "For first category orders, recommend highest-rated SKUs only; follow up with satisfaction check.",
+      "segmentHints": [
+        "new_parent",
+        "weekly_essentials_buyer"
+      ],
+      "frequency": 68,
+      "quotes": [
+        {
+          "reviewId": "rev-010",
+          "text": "Trust is the blocker. I'll repeat vegetables and fruits from Blinkit but won't buy electronics or personal care without seeing MRP and expiry clearly. One bad shampoo and I stopped exploring.",
+          "source": "forum",
+          "url": "https://forum.sample/quickcommerce/trust"
+        },
+        {
+          "reviewId": "rev-016",
+          "text": "Would try new categories if there was a 'â‚¹99 trial' badge and easy returns. Right now exploring feels like gambling with delivery slots.",
+          "source": "play_store",
+          "url": "https://play.google.com/store/apps/details?id=com.grofers.customerapp"
+        },
+        {
+          "reviewId": "rev-019",
+          "text": "Bought wrong size baby wipes from quick commerce â€” had to give away. Now I only buy baby stuff from Amazon where reviews are detailed.",
+          "source": "play_store",
+          "url": "https://play.google.com/store/apps/details?id=com.grofers.customerapp"
+        }
+      ]
+    }
+  ],
+  "hypotheses": [
+    "Weekly essentials buyers (3+ orders/month, ≤2 categories) avoid exploration due to speed-optimized reorder loops, not lack of interest.",
+    "Trust and wrong-purchase anxiety block personal care and baby category trials more than price.",
+    "Social proof and trial packs are the strongest levers to convert first purchase in a new category.",
+    "In-app discovery fails for 'unknown unknowns' — users need post-order async nudges, not homepage banners.",
+    "Students experiment via social sharing; weekly essentials buyers need risk-reduced curated starter packs."
+  ]
+}
