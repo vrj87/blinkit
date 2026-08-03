@@ -24,25 +24,26 @@ export interface NudgeRow {
   status: string;
 }
 
-function normalizeNudgeRow(n: Record<string, unknown>): NudgeRow {
+function normalizeNudgeRow(n: unknown): NudgeRow {
+  const row = (typeof n === "object" && n !== null ? n : {}) as Record<string, unknown>;
   return {
-    id: String(n.id),
-    suggestedCategory: String(n.suggestedCategory),
+    id: String(row.id),
+    suggestedCategory: String(row.suggestedCategory),
     adjacentTo:
-      typeof n.adjacentTo === "string" ? n.adjacentTo : JSON.stringify(n.adjacentTo ?? []),
-    copy: String(n.copy ?? ""),
-    rationale: String(n.rationale ?? ""),
+      typeof row.adjacentTo === "string" ? row.adjacentTo : JSON.stringify(row.adjacentTo ?? []),
+    copy: String(row.copy ?? ""),
+    rationale: String(row.rationale ?? ""),
     riskReducers:
-      typeof n.riskReducers === "string"
-        ? n.riskReducers
-        : JSON.stringify(n.riskReducers ?? []),
-    confidence: String(n.confidence ?? "medium"),
+      typeof row.riskReducers === "string"
+        ? row.riskReducers
+        : JSON.stringify(row.riskReducers ?? []),
+    confidence: String(row.confidence ?? "medium"),
     evidenceThemeIds:
-      typeof n.evidenceThemeIds === "string"
-        ? n.evidenceThemeIds
-        : JSON.stringify(n.evidenceThemeIds ?? []),
-    generationMeta: (n.generationMeta as string | null) ?? null,
-    status: String(n.status ?? "pending"),
+      typeof row.evidenceThemeIds === "string"
+        ? row.evidenceThemeIds
+        : JSON.stringify(row.evidenceThemeIds ?? []),
+    generationMeta: (row.generationMeta as string | null) ?? null,
+    status: String(row.status ?? "pending"),
   };
 }
 
@@ -177,8 +178,9 @@ export function DemoUserClient({ user, embedded = false }: DemoUserPageProps) {
       itemCount: meta.itemCount,
     });
     if (data.nudge) {
-      upsertNudge(normalizeNudgeRow(data.nudge as Record<string, unknown>));
-      setQueuedNudge(normalizeNudgeRow(data.nudge as Record<string, unknown>));
+      const nudge = normalizeNudgeRow(data.nudge);
+      upsertNudge(nudge);
+      setQueuedNudge(nudge);
     } else if (data.message) {
       setMessage(data.message);
     }
