@@ -41,7 +41,7 @@ git push origin main
 | Variable | Value |
 |----------|--------|
 | `GROQ_API_KEY` | Your key from [console.groq.com/keys](https://console.groq.com/keys) |
-| `DATABASE_URL` | `file:./dev.db` |
+| `DATABASE_URL` | `file:../dev.db` |
 | `N8N_WEBHOOK_SECRET` | Same as `apps/mvp/.env` |
 | `NEXT_PUBLIC_APP_URL` | `https://YOUR-SITE.netlify.app` *(after first deploy)* |
 

@@ -37,7 +37,7 @@ Set scopes to **All** or at minimum **Builds** + **Deploys**:
 | Variable | Required | Example |
 |----------|----------|---------|
 | `GROQ_API_KEY` | **Yes** (build + runtime) | Your Groq key |
-| `DATABASE_URL` | Yes | `file:./dev.db` |
+| `DATABASE_URL` | Yes | `file:../dev.db` *(relative to `prisma/schema.prisma` → `apps/mvp/dev.db`)* |
 | `N8N_WEBHOOK_SECRET` | Recommended | Same as local `.env` |
 | `NEXT_PUBLIC_APP_URL` | After 1st deploy | `https://YOUR-SITE.netlify.app` |
 
