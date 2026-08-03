@@ -85,6 +85,17 @@ Replace `YOUR-SITE` with your Netlify subdomain (e.g. `blinkit` → `blinkit.net
 
 ## Troubleshooting
 
+### `a3.snapshot is not a function` (Next.js 15)
+
+Root `netlify.toml` pins `@netlify/plugin-nextjs@5`. After pulling latest code:
+
+1. **Deploys → Clear cache and deploy site**
+2. Confirm build log shows plugin v5.x (not v4.x)
+
+### 500 on page load (database)
+
+Build seeds SQLite and bundles `dev.db`. Runtime copies it to `/tmp` on Lambda (see `apps/mvp/lib/db.ts`). Ensure `GROQ_API_KEY` is set so seed completes during build.
+
 ### 404 on every page
 
 - Confirm `@netlify/plugin-nextjs` is in `netlify.toml` (it is).

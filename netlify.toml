@@ -1,9 +1,8 @@
 # Netlify — Smart Category Explorer (monorepo)
-# Docs: https://docs.netlify.com/build/configure-builds/monorepos/
+# Docs: https://docs.netlify.com/build/frameworks/framework-setup-guides/nextjs/overview/
 
 [build]
-  # Install workspaces from repo root, then build the MVP app
-  command = "npm install && cd apps/mvp && npx prisma generate && npx prisma db push && npx tsx prisma/seed.ts && npm run build"
+  command = "bash scripts/netlify-build.sh"
   publish = "apps/mvp/.next"
 
 [build.environment]
@@ -11,4 +10,4 @@
   DATABASE_URL = "file:./dev.db"
 
 [[plugins]]
-  package = "@netlify/plugin-nextjs"
+  package = "@netlify/plugin-nextjs@5"

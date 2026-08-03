@@ -21,6 +21,7 @@
     "test:mvp": "vitest run tests/mvp"
   },
   "devDependencies": {
+    "@netlify/plugin-nextjs": "^5.15.11",
     "vitest": "^3.2.7"
   },
   "allowScripts": {
